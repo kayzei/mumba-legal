@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-midnight: #0A192F;
+  --color-champagne: #C5A059;
+  --color-champagne-light: #D4AF37;
+  --color-paper: #F8F5F0;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-paper text-midnight;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+.prestige-card {
+  @apply bg-white border border-midnight/5 shadow-sm rounded-none;
+}
+
+.gold-button {
+  @apply bg-champagne text-white px-6 py-2 font-serif tracking-wide hover:bg-midnight transition-colors duration-300;
+}
+

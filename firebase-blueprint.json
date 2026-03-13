@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Firm client or staff member profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "staff", "admin"] },
+        "kycStatus": { "type": "string", "enum": ["pending", "verified", "rejected"] },
+        "phoneNumber": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Matter": {
+      "title": "Matter",
+      "description": "A legal case or matter",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "clientId": { "type": "string" },
+        "department": { "type": "string", "enum": ["Corporate Law", "Dispute Resolution", "Real Estate", "Intellectual Property", "Family Law"] },
+        "status": { "type": "string", "enum": ["Open", "In Progress", "Court Stage", "Closed"] },
+        "nextCourtDate": { "type": "string", "format": "date-time" },
+        "lastUpdate": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "clientId", "department", "status"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Consultation booking",
+      "type": "object",
+      "properties": {
+        "clientId": { "type": "string" },
+        "department": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "notes": { "type": "string" }
+      },
+      "required": ["clientId", "department", "date", "status"]
+    },
+    "Document": {
+      "title": "Document",
+      "description": "Legal document or evidence",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["Evidence", "Firm Prepared", "Identity"] },
+        "url": { "type": "string" },
+        "matterId": { "type": "string" },
+        "uploadedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type", "url", "uploadedBy"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Secure chat message",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "matterId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["text", "senderId", "createdAt"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Billing and fee notes",
+      "type": "object",
+      "properties": {
+        "clientId": { "type": "string" },
+        "matterId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["unpaid", "paid", "overdue"] },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["clientId", "amount", "status", "dueDate"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/matters/{matterId}": { "schema": "Matter", "description": "Legal matters" },
+    "/matters/{matterId}/documents/{docId}": { "schema": "Document", "description": "Matter documents" },
+    "/matters/{matterId}/messages/{msgId}": { "schema": "Message", "description": "Matter chat" },
+    "/bookings/{bookingId}": { "schema": "Booking", "description": "Consultation bookings" },
+    "/invoices/{invoiceId}": { "schema": "Invoice", "description": "Client invoices" }
+  }
+}
