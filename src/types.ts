@@ -61,3 +61,12 @@ export interface Invoice {
   description: string;
   createdAt: string;
 }
+
+export interface KnowledgeBaseArticle {
+  id: string;
+  question: string;
+  answer: string;
+  category: 'General' | 'Corporate Law' | 'Dispute Resolution' | 'Real Estate' | 'Intellectual Property' | 'Family Law' | 'Portal Help';
+  tags?: string[];
+  createdAt: string;
+}

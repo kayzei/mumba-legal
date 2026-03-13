@@ -95,5 +95,10 @@ service cloud.firestore {
       allow read: if isStaff() || (isAuthenticated() && resource.data.clientId == request.auth.uid);
       allow create, update: if isStaff();
     }
+
+    match /knowledge_base/{articleId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isStaff();
+    }
   }
 }

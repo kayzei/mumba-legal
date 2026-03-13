@@ -10,10 +10,11 @@ import {
   addDoc, 
   orderBy,
   Timestamp,
-  getDocFromServer
+  getDocFromServer,
+  serverTimestamp
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-import { UserProfile, Matter, Booking, LegalDocument, Message, Invoice } from '../types';
+import { UserProfile, Matter, Booking, LegalDocument, Message, Invoice, KnowledgeBaseArticle } from '../types';
 
 enum OperationType {
   CREATE = 'create',
@@ -150,5 +151,24 @@ export const firmService = {
       const invoices = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Invoice));
       callback(invoices);
     }, (error) => handleFirestoreError(error, OperationType.LIST, 'invoices'));
+  },
+
+  subscribeToKnowledgeBase(callback: (articles: any[]) => void) {
+    const q = query(collection(db, 'knowledge_base'), orderBy('category', 'asc'));
+    return onSnapshot(q, (snapshot) => {
+      const articles = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      callback(articles);
+    }, (error) => handleFirestoreError(error, OperationType.LIST, 'knowledge_base'));
+  },
+
+  async addKnowledgeBaseArticle(article: Omit<KnowledgeBaseArticle, 'id'>) {
+    try {
+      await addDoc(collection(db, 'knowledge_base'), {
+        ...article,
+        createdAt: serverTimestamp()
+      });
+    } catch (error) {
+      handleFirestoreError(error, OperationType.CREATE, 'knowledge_base');
+    }
   }
 };

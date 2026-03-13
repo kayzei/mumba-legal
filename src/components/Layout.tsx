@@ -6,6 +6,7 @@ import {
   Briefcase, 
   Calendar, 
   CreditCard, 
+  BookOpen,
   LogOut, 
   User,
   Menu,
@@ -23,6 +24,7 @@ const Layout: React.FC = () => {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Bookings', path: '/bookings', icon: Calendar },
     { name: 'Billing', path: '/billing', icon: CreditCard },
+    { name: 'Knowledge Base', path: '/knowledge', icon: BookOpen },
   ];
 
   const handleLogout = async () => {

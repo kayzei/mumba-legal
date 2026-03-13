@@ -85,6 +85,19 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["clientId", "amount", "status", "dueDate"]
+    },
+    "KnowledgeBase": {
+      "title": "Knowledge Base",
+      "description": "FAQ and legal guides",
+      "type": "object",
+      "properties": {
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "category": { "type": "string", "enum": ["General", "Corporate Law", "Dispute Resolution", "Real Estate", "Intellectual Property", "Family Law", "Portal Help"] },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["question", "answer", "category"]
     }
   },
   "firestore": {
@@ -93,6 +106,7 @@
     "/matters/{matterId}/documents/{docId}": { "schema": "Document", "description": "Matter documents" },
     "/matters/{matterId}/messages/{msgId}": { "schema": "Message", "description": "Matter chat" },
     "/bookings/{bookingId}": { "schema": "Booking", "description": "Consultation bookings" },
-    "/invoices/{invoiceId}": { "schema": "Invoice", "description": "Client invoices" }
+    "/invoices/{invoiceId}": { "schema": "Invoice", "description": "Client invoices" },
+    "/knowledge_base/{articleId}": { "schema": "KnowledgeBase", "description": "FAQ articles" }
   }
 }

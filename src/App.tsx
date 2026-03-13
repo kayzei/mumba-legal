@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import MatterDetail from './pages/MatterDetail';
 import Bookings from './pages/Bookings';
 import Billing from './pages/Billing';
+import KnowledgeBase from './pages/KnowledgeBase';
 import ErrorBoundary from './components/ErrorBoundary';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
               <Route path="matters/:id" element={<MatterDetail />} />
               <Route path="bookings" element={<Bookings />} />
               <Route path="billing" element={<Billing />} />
+              <Route path="knowledge" element={<KnowledgeBase />} />
             </Route>
             
             <Route path="*" element={<Navigate to="/" replace />} />
